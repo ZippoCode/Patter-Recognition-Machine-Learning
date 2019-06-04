@@ -38,7 +38,7 @@ class Agent:
         if np.random.uniform(0, 1) < self.epsilon:
             action = np.random.randint(0, self.n_actions)  # explore
         else:
-            action = self.get_action_greedy(r, c)   #exploit
+            action = self.get_action_greedy(r, c)  # exploit
         return action
 
     def get_action_greedy(self, r, c):

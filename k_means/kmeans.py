@@ -3,7 +3,7 @@ from numpy.matlib import repmat
 
 import matplotlib.pyplot as plt
 
-from datasets import gaussians_dataset
+from utils.datasets import gaussians_dataset
 
 import cv2
 
@@ -48,13 +48,6 @@ def kmeans(data, n_cl, verbose=True):
         for l in range(0, n_cl):
             centers[l] = np.mean(data[new_labels == l], axis=0)
 
-        if verbose:
-            fig, ax = plt.subplots()
-            ax.scatter(data[:, 0], data[:, 1], c=new_labels, s=40)
-            ax.plot(centers[:, 0], centers[:, 1], 'r*', markersize=20)
-            plt.waitforbuttonpress()
-            plt.close()
-
         if np.all(new_labels == old_labels):
             break
 
@@ -64,9 +57,12 @@ def kmeans(data, n_cl, verbose=True):
     return new_labels
 
 
-def main_kmeans_gaussian():
+def main_kmeans_gaussian(n_cl=3):
     """
     Main function to run kmeans the synthetic gaussian dataset.
+
+    :param:
+        - n_cl: number of clusters (default is three)
     """
 
     # generate the dataset
@@ -75,10 +71,9 @@ def main_kmeans_gaussian():
     # visualize the dataset
     fig, ax = plt.subplots(1, 2)
     ax[0].scatter(data[:, 0], data[:, 1], c=cl, s=40)
-    plt.waitforbuttonpress()
 
     # solve kmeans optimization
-    labels = kmeans(data, n_cl=2, verbose=False)
+    labels = kmeans(data, n_cl=n_cl, verbose=False)
 
     # visualize results
     ax[1].scatter(data[:, 0], data[:, 1], c=labels, s=40)
@@ -107,7 +102,6 @@ def main_kmeans_img(img_path):
     fig, ax = plt.subplots(1, 2)
     ax[0].imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.uint8))
     ax[0].axis('off')
-    plt.waitforbuttonpress()
 
     # add coordinates
     row_indexes = np.arange(0, h)
@@ -127,5 +121,5 @@ def main_kmeans_img(img_path):
 
 
 if __name__ == '__main__':
-    main_kmeans_img('img/emma.png')
-    # main_kmeans_gaussian()
+    # main_kmeans_img('emma.png')
+    main_kmeans_gaussian(5)

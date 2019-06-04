@@ -31,7 +31,6 @@ def gaussians_dataset(n_gaussian, n_points, mus, stds):
     data = []
     cl = []
     for i in range(0, n_gaussian):
-
         mu = mus[i]
         std = stds[i]
         n_pt = n_points[i]
